@@ -1,0 +1,27 @@
+.post{
+    height: 400px;
+    width: 450px;
+    padding: 18px;
+    background-color: rgba(240, 240, 240,0.25);
+    margin: 20px;
+    border-radius: 10px;
+
+}
+.title{
+    margin-top: 10px;
+    font-size: 17px;
+    font-weight: bold;
+}
+.text{
+    margin-top: 10px;
+}
+.post_header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.add_date{
+    font-size: 13px;
+    font-weight: 600;
+    color: gray;
+}

@@ -1,0 +1,10 @@
+.drop_area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 10px;
+    border: 2px dashed gray;
+}
+.input_file{
+    display: none;
+}

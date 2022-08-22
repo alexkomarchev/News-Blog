@@ -1,0 +1,39 @@
+.text {
+    border: none;
+    outline: none;
+    resize: none;
+    margin-top: 10px;
+    height: 400px;
+    width: 500px;
+    padding: 10px;
+    font-size: 17px;
+    font-family: "Mulish", sans-serif, "Outfit", sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+}
+
+.text::placeholder {
+    font-weight: 700;
+}
+
+.title {
+    font-size: 24px;
+    padding: 10px;
+    outline: none;
+    border: none;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.title::placeholder {
+    font-weight: 700;
+}
+
+.postEditor {
+    text-align: center;
+
+}
+
+
+.post {
+    width: 250px;
+}

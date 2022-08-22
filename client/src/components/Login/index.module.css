@@ -1,0 +1,11 @@
+.removeUser{
+    border: none;
+    color: rgba(25, 118, 210,0.9);
+    background-color: transparent;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+}
+.removeUser:hover{
+    color: #1976d2;
+}

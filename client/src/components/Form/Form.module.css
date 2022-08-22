@@ -1,0 +1,16 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.form__input {
+    width: 310px;
+    border-radius: 15px;
+}
+
+.form__button {
+    padding: 8px;
+    margin-top: 10px;
+    border-radius: 30px;
+}
