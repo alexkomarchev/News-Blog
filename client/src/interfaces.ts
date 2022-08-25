@@ -1,7 +1,7 @@
 export interface IUser {
-    email?: string | null,
-    token: string | null,
-    id: string | null,
+    email: string | null;
+    name: string | null;
+
 }
 
 export interface IPost {

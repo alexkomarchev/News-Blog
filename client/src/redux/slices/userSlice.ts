@@ -4,8 +4,7 @@ import {IUser} from "../../interfaces";
 
 const initialState: IUser = {
     email: null,
-    token: null,
-    id: null,
+    name: null,
 }
 
 const userSlice = createSlice({
@@ -13,20 +12,18 @@ const userSlice = createSlice({
     initialState,
     reducers: {
         setUser: (state, {payload}: PayloadAction<IUser>) => {
-            const {email, token, id} = payload;
+            const {email, name} = payload;
             state.email = email
-            state.token = token
-            state.id = id
+            state.name = name
         },
         removeUser: (state) => {
             state.email = null
-            state.token = null
-            state.id = null
+            state.name = null
         }
     }
 })
 
-export const {setUser,removeUser} = userSlice.actions
+export const {setUser, removeUser} = userSlice.actions
 
 export default userSlice.reducer
 

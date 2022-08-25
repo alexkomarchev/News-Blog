@@ -1,10 +1,13 @@
 import {FC} from 'react';
 import styles from '../../../styles/Login.module.css'
 import Form from "../Form/Form";
-import {getAuth, signInWithEmailAndPassword} from "firebase/auth";
+import {getAuth} from "firebase/auth";
 import {useAppDispatch} from "../../redux/hooks";
-import {setUser} from "../../redux/slices/userSlice";
 import {useRouter} from "next/router";
+import {baseUrl} from "../../constants/api";
+import axios from "axios";
+import {setCookie} from "nookies";
+import {setUser} from "../../redux/slices/userSlice";
 
 
 const Auth: FC = () => {
@@ -12,22 +15,22 @@ const Auth: FC = () => {
     const dispatch = useAppDispatch()
     const router = useRouter()
 
-    const signIn = (email: string, password: string): void => {
-        signInWithEmailAndPassword(auth, email, password)
-            .then(({user}) => {
-                dispatch(setUser({
-                    email: user.email,
-                    token: user.refreshToken,
-                    id: user.uid,
-                }))
-                router.push('/')
-            })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-            });
-    }
+    const signIn = async (email: string, password: string) => {
 
+        try {
+            const {data} = await axios.post(`${baseUrl}/auth/login`, {
+                email,
+                password,
+            })
+            console.log(data)
+            setCookie(null, 'token', data.token)
+            dispatch(setUser(data.dataValues))
+            await router.push('/')
+
+        } catch (err) {
+            console.log('Ошибка')
+        }
+    }
 
     return (
         <div className={styles.auth}>

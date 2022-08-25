@@ -1,6 +1,6 @@
-import { Body, Controller, Get, Param, Post, Query } from "@nestjs/common";
-import { PostService } from "./post.service";
-import { CreatePostDto } from "./dto/createPost.dto";
+import {Body, Controller, Get, Param, Post} from "@nestjs/common";
+import {PostService} from "./post.service";
+import {CreatePostDto} from "./dto/createPost.dto";
 
 
 @Controller("post")
