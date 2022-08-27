@@ -1,5 +1,6 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {IUser} from "../../interfaces";
+import {HYDRATE} from "next-redux-wrapper";
 
 
 const initialState: IUser = {
@@ -17,8 +18,14 @@ const userSlice = createSlice({
             state.name = name
         },
         removeUser: (state) => {
-            state.email = null
-            state.name = null
+            state.email = '1'
+            state.name = '1'
+        },
+    },
+    extraReducers: {
+        [HYDRATE]: (state, action) => {
+            state.email = action.payload.user.email
+            state.name = action.payload.user.name
         }
     }
 })

@@ -3,7 +3,9 @@ import styles from '../styles/CreatePost.module.css'
 import Layout from "../src/components/Layout";
 import PostEditor from "../src/components/PostEditor";
 import nookies from "nookies";
-import {baseUrl} from "../src/constants/api";
+import {checkLogin} from "../utils/utils";
+import {GetServerSideProps} from "next";
+import {wrapper} from "../src/redux";
 
 const CreatePost: NextPage = () => {
 
@@ -18,27 +20,13 @@ const CreatePost: NextPage = () => {
     )
 }
 
-export async function getServerSideProps(ctx: any) {
+export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps((store) => async (ctx) => {
 
-    const {token} = nookies.get(ctx)
-
-
-
-    if (!token) {
-        return {
-            redirect: {
-                destination: '/login',
-                permanent: false,
-            }
-        }
-    }
+    checkLogin(ctx, store)
 
     return {
         props: {}
     }
-
-
-}
-
+})
 
 export default CreatePost

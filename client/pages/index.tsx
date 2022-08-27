@@ -7,8 +7,10 @@ import jwt_decode from 'jwt-decode'
 import Layout from "../src/components/Layout";
 import {baseUrl} from "../src/constants/api";
 import axios from "axios";
-import {setUser} from "../src/redux/slices/userSlice";
+import {removeUser, setUser} from "../src/redux/slices/userSlice";
 import {wrapper} from "../src/redux";
+import {useAppSelector} from "../src/redux/hooks";
+import {checkLogin} from "../utils/utils";
 
 interface IPosts {
     data: IPost[] | null
@@ -16,6 +18,9 @@ interface IPosts {
 
 const Home: NextPage<IPosts> = ({data}) => {
 
+    const a = useAppSelector(state => state.user)
+
+    console.log(a)
     return (
         <Layout>
             <div className={styles.home}>
@@ -30,13 +35,8 @@ const Home: NextPage<IPosts> = ({data}) => {
 
 export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps((store) => async (ctx) => {
 
-    const {token} = nookies.get(ctx)
 
-    const decode: IUser = jwt_decode(token)
-
-    console.log(decode)
-
-    store.dispatch(setUser({'email':'1','name':'1'}))
+    checkLogin(ctx, store)
 
     const {data} = await axios.get(`${baseUrl}/post`)
 
