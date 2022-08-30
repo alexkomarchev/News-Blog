@@ -1,16 +1,12 @@
 import type {GetServerSideProps, NextPage} from 'next'
 import styles from '../styles/Home.module.css'
 import Post from "../src/components/Post/Post";
-import {IPost, IUser} from "../src/interfaces";
-import nookies from 'nookies'
-import jwt_decode from 'jwt-decode'
+import {IPost} from "../src/interfaces";
 import Layout from "../src/components/Layout";
-import {baseUrl} from "../src/constants/api";
-import axios from "axios";
-import {removeUser, setUser} from "../src/redux/slices/userSlice";
 import {wrapper} from "../src/redux";
-import {useAppSelector} from "../src/redux/hooks";
+import {useAppDispatch, useAppSelector} from "../src/redux/hooks";
 import {checkLogin} from "../utils/utils";
+import {getPosts} from "../api/api";
 
 interface IPosts {
     data: IPost[] | null
@@ -18,13 +14,10 @@ interface IPosts {
 
 const Home: NextPage<IPosts> = ({data}) => {
 
-    const a = useAppSelector(state => state.user)
-
-    console.log(a)
     return (
         <Layout>
             <div className={styles.home}>
-                {data?.map(post => <Post key={post.id} author={post.author} createdAt={post.createdAt}
+                {data?.map(post => <Post id={post.id} key={post.id} author={post.author} createdAt={post.createdAt}
                                          title={post.title}
                                          body={post.body}/>)}
             </div>
@@ -35,15 +28,12 @@ const Home: NextPage<IPosts> = ({data}) => {
 
 export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps((store) => async (ctx) => {
 
-
     checkLogin(ctx, store)
 
-    const {data} = await axios.get(`${baseUrl}/post`)
+    const {data} = await store.dispatch(getPosts.initiate())
 
     return {
-        props: {
-            data
-        }
+        props: {data}
     }
 })
 

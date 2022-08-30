@@ -1,6 +1,6 @@
 export interface IUser {
-    email: string | null;
-    name: string | null;
+    email: string;
+    name: string;
 
 }
 
@@ -12,3 +12,45 @@ export interface IPost {
     createdAt: string,
     updatedAt?: string
 }
+
+
+
+export type PostCreate = Pick<IPost, "title" | "body" | "author">
+
+
+    export interface DataValues {
+        email: string;
+        name: string;
+        password: string;
+        createdAt: Date;
+        updatedAt: Date;
+    }
+
+    export interface PreviousDataValues {
+        email: string;
+        name: string;
+        password: string;
+        createdAt: Date;
+        updatedAt: Date;
+    }
+
+    export interface Changed {
+    }
+
+    export interface Options {
+        isNewRecord: boolean;
+        _schema?: any;
+        _schemaDelimiter: string;
+        raw: boolean;
+        attributes: string[];
+    }
+
+    export interface ILogin {
+        dataValues: DataValues;
+        _previousDataValues: PreviousDataValues;
+        uniqno: number;
+        _changed: Changed;
+        _options: Options;
+        isNewRecord: boolean;
+        token: string;
+    }

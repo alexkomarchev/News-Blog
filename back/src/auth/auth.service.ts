@@ -10,13 +10,13 @@ import {IUser} from "../user/user.interface";
 @Injectable()
 export class AuthService {
 
-    constructor(private userService: UserService, private jwtService: JwtService) {
-    }
+    constructor(private userService: UserService, private jwtService: JwtService) {}
 
-    async login(loginDto: LoginDto): Promise<IUser> {
+    async login(loginDto: LoginDto): Promise<any> {
         const user = await this.validateUser(loginDto)
         const {token} = await this.generateToken(user)
-        return {...user, token}
+        console.log(user)
+        return {user,token}
     }
 
     private async validateUser({email, password}: LoginDto) {
@@ -29,7 +29,7 @@ export class AuthService {
     }
 
 
-    async registration(userDto: CreateUserDto) {
+    async registration(userDto: CreateUserDto):Promise<IUser> {
         const candidate = await this.userService.getUserByEmail(userDto.email);
 
         if (candidate) {
@@ -38,7 +38,8 @@ export class AuthService {
 
         const hashPassword = await bcrypt.hash(userDto.password, 5);
         const user = await this.userService.create({...userDto, password: hashPassword});
-        return this.generateToken(user);
+        const {token} = await this.generateToken(user)
+        return {...user, token}
     }
 
     async generateToken({email, id, name}: User) {

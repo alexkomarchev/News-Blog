@@ -1,4 +1,4 @@
-import {Body, Controller, Get, Param, Post} from "@nestjs/common";
+import {Body, Controller, Delete, Get, Param, Post, Query} from "@nestjs/common";
 import {PostService} from "./post.service";
 import {CreatePostDto} from "./dto/createPost.dto";
 
@@ -21,6 +21,11 @@ export class PostController {
   @Get(":id")
   getById(@Param("id") id) {
     return this.postService.findById(id);
+  }
+
+  @Delete()
+  remove(@Query() query){
+    return this.postService.remove(query.id)
   }
 
   // @Get()

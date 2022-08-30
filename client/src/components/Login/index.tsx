@@ -4,19 +4,31 @@ import styles from './index.module.css'
 import Link from "next/link";
 import {useAppDispatch} from "../../redux/hooks";
 import {removeUser} from "../../redux/slices/userSlice";
+import {setCookie} from "nookies";
 
 const Login: FC = () => {
 
-    const {isAuth} = useAuth()
+    const {isAuth, name} = useAuth()
 
     const dispatch = useAppDispatch()
 
-    console.log(isAuth)
+    function exit() {
+        location.reload();
+        dispatch(removeUser())
+        setCookie(null, 'token', '')
+    }
 
     return (
         <>
-            {isAuth ? <button className={styles.removeUser} onClick={() => dispatch(removeUser())}>
-                Выйти</button> : <Link  href={'/login'}><a className={styles.removeUser}>Войти</a></Link>}
+            {isAuth ?
+                <div>
+                    {name}
+                    <button className={styles.removeUser} onClick={exit}>
+                        Выйти
+                    </button>
+                </div>
+                : <Link href={'/login'}><a className={styles.removeUser}>Войти</a></Link>
+            }
         </>
     );
 };

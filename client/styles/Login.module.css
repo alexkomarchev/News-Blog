@@ -1,15 +1,17 @@
 .login{
-    justify-content: space-between;
+    justify-content:center;
     align-items: center;
     display: flex;
-    height: 55vh;
+    height: 75vh;
 }
 .auth{
     flex: 1;
     display: flex;
     justify-content: center;
-    padding-right: 60px;
 
+}
+.registration{
+    display: flex;
 }
 .image{
     color: #1976d2;

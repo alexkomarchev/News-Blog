@@ -1,14 +1,13 @@
 import type {NextPage} from 'next'
 import styles from '../styles/Login.module.css'
-import Auth from "../src/components/Auth/Auth";
+import Reg from "../src/components/Registration";
 
-
-const Login: NextPage = () => {
+const Registration: NextPage = () => {
     return (
         <div className={styles.login}>
-            <Auth/>
+            <Reg/>
         </div>
     )
 }
 
-export default Login
+export default Registration
