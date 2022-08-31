@@ -5,22 +5,27 @@ import {JwtService} from "@nestjs/jwt";
 import * as bcrypt from "bcryptjs";
 import {User} from "../user/user.model";
 import {LoginDto} from "./dto/auth.dto";
-import {IUser} from "../user/user.interface";
+import {IResponseUser} from "../user/user.interface";
 
 @Injectable()
 export class AuthService {
 
-    constructor(private userService: UserService, private jwtService: JwtService) {}
+    constructor(private userService: UserService, private jwtService: JwtService) {
+    }
 
-    async login(loginDto: LoginDto): Promise<any> {
+    async login(loginDto: LoginDto): Promise<IResponseUser> {
         const user = await this.validateUser(loginDto)
         const {token} = await this.generateToken(user)
-        console.log(user)
-        return {user,token}
+        const {name, email, createdAt, updatedAt} = user
+
+        return {name, email, createdAt, updatedAt, token}
     }
 
     private async validateUser({email, password}: LoginDto) {
         const user = await this.userService.getUserByEmail(email);
+        if (!user) {
+            throw new UnauthorizedException({message: "Неверный логин или пароль"})
+        }
         const passwordEquals = await bcrypt.compare(password, user.password);
         if (user && passwordEquals) {
             return user;
@@ -29,7 +34,7 @@ export class AuthService {
     }
 
 
-    async registration(userDto: CreateUserDto):Promise<IUser> {
+    async registration(userDto: CreateUserDto): Promise<IResponseUser> {
         const candidate = await this.userService.getUserByEmail(userDto.email);
 
         if (candidate) {
@@ -39,7 +44,9 @@ export class AuthService {
         const hashPassword = await bcrypt.hash(userDto.password, 5);
         const user = await this.userService.create({...userDto, password: hashPassword});
         const {token} = await this.generateToken(user)
-        return {...user, token}
+        const {name, email, createdAt, updatedAt} = user
+
+        return {name, email, createdAt, updatedAt, token}
     }
 
     async generateToken({email, id, name}: User) {

@@ -21,7 +21,12 @@
     border-radius: 30px;
 }
 .more{
-    color: #1976d2;
+    font-size: 14px;
     margin: 13px;
     text-align: right;
+}
+.link{
+    margin-left: 5px;
+    color: #1976d2;
+
 }

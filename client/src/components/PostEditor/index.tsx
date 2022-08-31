@@ -15,6 +15,7 @@ const PostEditor: FC = () => {
 
     const [create] = useCreatePostMutation()
 
+
     async function goPost() {
         await create({title, body, author})
         await router.push('/')
